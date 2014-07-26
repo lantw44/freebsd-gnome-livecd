@@ -1,4 +1,6 @@
+ports-mgmt/pkg
 x11/gnome3
+deskutils/gnome-shell-extra-extensions
 x11-servers/xorg-server
 x11-drivers/xorg-drivers
 dns/bind-tools
