@@ -5,9 +5,9 @@
 : ${src:="/home/lantw44/livecd/src"}
 : ${root:="/home/lantw44/livecd/root"}
 : ${cdroot:="/home/lantw44/livecd/cdroot"}
-: ${image:="/home/lantw44/livecd/out/FreeBSD-10.1-GNOME-3.14-`date '+%Y%m%d'`.iso"}
+: ${image:="/home/lantw44/livecd/out/FreeBSD-10.1-GNOME-3.15-`date '+%Y%m%d'`.iso"}
 
-: ${repo="/usr/local/poudriere/data/packages/freebsd10-marcuscom-gnome3"}
+: ${repo="/usr/local/poudriere/data/packages/freebsd10-ports-gnome-gnome3"}
 : ${pkgs="`cat /home/lantw44/livecd/gnome3-pkgs`"}
 
 # ===========================================================================
