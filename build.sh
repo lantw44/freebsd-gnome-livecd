@@ -12,7 +12,7 @@
 
 # ===========================================================================
 
-vol="FREEBSD_10_GNOME_3"
+vol="FREEBSD_LIVE_10_1_GNOME_3_15_92"
 steps="system packages user config uzip ramdisk boot image"
 pwdir="`dirname "$0"`"
 cd "${pwdir}"

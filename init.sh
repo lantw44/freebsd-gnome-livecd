@@ -14,7 +14,7 @@ echo "==> Make mountpoints"
 mkdir -p /cdrom /memdisk /sysroot
 
 echo "==> Mount cdrom"
-mount_cd9660 /dev/iso9660/FREEBSD_10_GNOME_3 /cdrom
+mount_cd9660 /dev/iso9660/FREEBSD_LIVE_10_1_GNOME_3_15_92 /cdrom
 mdmfs -P -F /cdrom/data/system.uzip -o ro md.uzip /sysroot
 
 if [ "$SINGLE_USER" = "true" ]; then
