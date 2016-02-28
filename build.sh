@@ -72,7 +72,8 @@ ramdisk () {
 	cd "${root}"
 	tar -cf - rescue | tar -xf - -C "${ramdisk_root}"
 	cd "${pwdir}"
-	install -o root -g wheel -m 755 "init.sh" "${ramdisk_root}"
+	install -o root -g wheel -m 755 "init.sh.in" "${ramdisk_root}/init.sh"
+	sed "s/@VOLUME@/${vol}/" "init.sh.in" > "${ramdisk_root}/init.sh"
 	mkdir "${ramdisk_root}/dev"
 	mkdir "${ramdisk_root}/etc"
 	touch "${ramdisk_root}/etc/fstab"
@@ -135,6 +136,12 @@ assert_empty pkgs "${pkgs}"
 assert_empty vol "${vol}"
 unset assert_dir_or_file
 unset assert_empty
+
+# Check whether the volume name is too long
+if [ "${#vol}" -gt "31" ]; then
+	echo "Variable 'vol' is too long. The length must not exceed 31 bytes."
+	exit 1
+fi
 
 printf "All steps: \033[1;33m%s\033[m\n" "${steps}"
 printf "(E)dit or (R)un? "
