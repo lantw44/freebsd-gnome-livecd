@@ -1,22 +1,5 @@
-#!/bin/sh
-
-# == Configurations =========================================================
-
-: ${src:="/home/lantw44/livecd/src"}
-: ${root:="/home/lantw44/livecd/root"}
-: ${cdroot:="/home/lantw44/livecd/cdroot"}
-: ${image:="/home/lantw44/livecd/out/FreeBSD-10.1-GNOME-3.15-`date '+%Y%m%d'`.iso"}
-
-: ${repo="/usr/local/poudriere/data/packages/freebsd10-ports-gnome-gnome3"}
-: ${pkgs="`cat /home/lantw44/livecd/gnome3-pkgs`"}
-
-# ===========================================================================
-
-vol="FREEBSD_LIVE_10_1_GNOME_3_15_92"
 steps="system packages user config uzip ramdisk boot image"
-pwdir="`dirname "$0"`"
-cd "${pwdir}"
-pwdir="`pwd`"
+pwdir="$(realpath $(dirname "$0"))"
 
 system () {
 	install -o root -g wheel -m 755 -d "${root}"
@@ -118,6 +101,39 @@ if [ "`id -u`" '!=' "0" ]; then
 	echo "Sorry, you are not root ..."
 	exit 1
 fi
+
+# This check cannot be done reliably, but it should be able to catch the
+# most common mistake.
+if [ "$(basename "$0")" = "build.sh" ] && [ "${pwdir}" = "$(realpath $(pwd))" ]; then
+	echo "This script cannot be run directly."
+	echo "Please create a wrapper script that sources this file instead."
+	echo "You can use build-release.sh and build-debug.sh as examples."
+	exit 1
+fi
+
+# Check whether required variables are defined.
+assert_dir_or_file () {
+	if [ -z "$2" ] || [ "$(realpath "$2" 2>/dev/null)" = "/" ]; then
+		echo "Variable '$1' is unset or set to the root directory."
+		exit 1
+	fi
+}
+assert_empty () {
+	if [ -z "$2" ]; then
+		echo "Variable '$1' is empty."
+		echo "If no package have to be installed, set it to 'pkg'."
+		exit 1
+	fi
+}
+assert_dir_or_file src "${src}"
+assert_dir_or_file root "${root}"
+assert_dir_or_file cdroot "${cdroot}"
+assert_dir_or_file image "${image}"
+assert_dir_or_file repo "${repo}"
+assert_empty pkgs "${pkgs}"
+assert_empty vol "${vol}"
+unset assert_dir_or_file
+unset assert_empty
 
 printf "All steps: \033[1;33m%s\033[m\n" "${steps}"
 printf "(E)dit or (R)un? "

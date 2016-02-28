@@ -8,12 +8,12 @@ date="`date '+%Y%m%d'`"
 # == Configurations =========================================================
 
 src="`pwd`/src"
-root="`pwd`/root-debug"
-cdroot="`pwd`/cdroot-debug"
-image="`pwd`/out/FreeBSD-${freebsd_version}-GNOME-${gnome_version}-${date}-debug.iso"
+root="`pwd`/root-release"
+cdroot="`pwd`/cdroot-release"
+image="`pwd`/out/FreeBSD-${freebsd_version}-GNOME-${gnome_version}-${date}.iso"
 
-repo="/usr/local/poudriere/data/packages/freebsd10-ports-gnome-gnome3-debug"
-pkgs="`cat gnome3-debug-pkgs`"
+repo="/usr/local/poudriere/data/packages/freebsd10-ports-gnome-gnome3-release"
+pkgs="`cat gnome3-release-pkgs`"
 vol="FREEBSD_GNOME_${gnome_underscore}_DEBUG"
 
 # ===========================================================================
