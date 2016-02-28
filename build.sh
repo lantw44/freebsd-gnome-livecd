@@ -2,13 +2,16 @@
 
 # == Configurations =========================================================
 
-: ${src:="/home/lantw44/livecd/src"}
-: ${root:="/home/lantw44/livecd/root"}
-: ${cdroot:="/home/lantw44/livecd/cdroot"}
-: ${image:="/home/lantw44/livecd/out/FreeBSD-10.1-GNOME-3.15-`date '+%Y%m%d'`.iso"}
+: ${src:="/usr/local/tmp/livecd/src"}
+: ${root:="/usr/local/tmp/livecd/root"}
+: ${cdroot:="/usr/local/tmp/livecd/cdroot"}
+: ${out:="/usr/local/tmp/livecd/out"}
+: ${image:="/usr/local/tmp/livecd/out/FreeBSD-10.2-GNOME-3.18-`date '+%Y%m%d'`.iso"}
 
 : ${repo="/usr/local/poudriere/data/packages/freebsd10-ports-gnome-gnome3"}
-: ${pkgs="`cat /home/lantw44/livecd/gnome3-pkgs`"}
+: ${pkgs="`cat gnome3-pkgs`"}
+: ${ARCH="amd64"}
+: ${OSVERSION="10.2"}
 
 # ===========================================================================
 
@@ -19,11 +22,13 @@ cd "${pwdir}"
 pwdir="`pwd`"
 
 system () {
-	install -o root -g wheel -m 755 -d "${root}"
+	mkdir -p "${src}" || return 1
+	mkdir -p "${root}" || return 1
 	cd "${src}" || return 1
-	make installworld  DESTDIR="${root}" || return 1
-	make installkernel DESTDIR="${root}" || return 1
-	make distribution  DESTDIR="${root}" || return 1
+        fetch ftp://ftp.freebsd.org/pub/FreeBSD/releases/"${ARCH}"/"${ARCH}"/"${OSVERSION}"-RELEASE/kernel.txz || return 1
+        fetch ftp://ftp.freebsd.org/pub/FreeBSD/releases/"${ARCH}"/"${ARCH}"/"${OSVERSION}"-RELEASE/base.txz || return 1
+        tar -xf "${src}"/kernel.txz  -C "${root}" || return 1
+        tar -xf "${src}"/base.txz -C "${root}" || return 1
 }
 
 packages () {
@@ -108,6 +113,7 @@ boot () {
 }
 
 image () {
+	mkdir "${out}" || return 1
 	cd "${cdroot}"
 	mkisofs -iso-level 4 -R -l -ldots -allow-lowercase -allow-multidot -V \
 		"${vol}" -o "${image}" -no-emul-boot -b boot/cdboot .
