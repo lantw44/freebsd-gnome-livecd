@@ -2,12 +2,12 @@
 
 # == Configurations =========================================================
 
-root="/home/lantw44/livecd/root-debug"
-cdroot="/home/lantw44/livecd/cdroot-debug"
-image="/home/lantw44/livecd/out/FreeBSD-10.1-GNOME-3.15-`date '+%Y%m%d'`-debug.iso"
+root="/usr/local/tmp/livecd/root-debug"
+cdroot="/usr/local/tmp/livecd/cdroot-debug"
+image="/usr/local/tmp/livecd/out/FreeBSD-10.1-GNOME-3.15-`date '+%Y%m%d'`-debug.iso"
 
 repo="/usr/local/poudriere/data/packages/freebsd10-ports-gnome-gnome3-debug"
-pkgs="`cat /home/lantw44/livecd/gnome3-debug-pkgs`"
+pkgs="`cat gnome3-debug-pkgs`"
 
 # ===========================================================================
 
