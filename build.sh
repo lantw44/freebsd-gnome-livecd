@@ -59,7 +59,8 @@ EOF
 }
 
 uzip () {
-	install -o root -g wheel -m 755 -d "${cdroot}/data"
+	install -o root -g wheel -m 755 -d "${cdroot}"
+	mkdir "${cdroot}/data"
 	makefs "${cdroot}/data/system.ufs" "${root}"
 	mkuzip -o "${cdroot}/data/system.uzip" "${cdroot}/data/system.ufs"
 	rm -f "${cdroot}/data/system.ufs"
