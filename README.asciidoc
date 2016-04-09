@@ -1,0 +1,70 @@
+= Build your own FreeBSD LiveCD
+
+
+This project provides a simple and easy-to-understand script that can be used
+to build a LiveCD for FreeBSD. The implementation is largely based on
+https://wiki.freebsd.org/AvgLiveCD[AvgLiveCD] article written by
+https://wiki.freebsd.org/AndriyGapon[Andriy Gapon].
+
+Unlike most other scripts to automate the process of building LiveCD, it
+doesn't try to hide the complexity behind a fancy user interface. Instead,
+users can easily configure steps needed to run and see commands run in each
+step. Modification and debugging is very easy once you know how to use it.
+
+It is called "FreeBSD GNOME LiveCD" because it was originally made to test
+and preview the next version of GNOME. There is no GNOME-specific things in
+the script, and it can be used to build LiveCD for any other environments.
+
+
+== Prepare required sources and tools
+ - Install `sysutils/cdrtools` to get `mkisofs` program.
+
+-----------------------------------------------------------------------
+   pkg install sysutils/cdrtools
+-----------------------------------------------------------------------
+
+ - Download and build FreeBSD source code of the version you want to use.
+
+-----------------------------------------------------------------------
+   svn co https://svn.freebsd.org/base/head freebsd-base
+   cd freebsd-base
+   make buildworld buildkernel
+-----------------------------------------------------------------------
+
+ - Get a local copy of the pkgng repository you want to use. You can build
+   your own repository with programs like `poudriere`.
+
+-----------------------------------------------------------------------
+   poudriere jail ...
+   poudriere ports ...
+   poudriere bulk ...
+-----------------------------------------------------------------------
+
+== Set required variables
+ - The build script read configuration from shell variables.
+ - Create a copy of `build-release.sh` or `build-debug.sh` and set the
+   following required variables in it:
+  * `src`: path to FreeBSD source code.
+  * `repo`: path to pkgng repository.
+  * `pkgs`: list of packages to be installed.
+  * `image`: path to the output LiveCD image.
+  * `vol`: volume name of the output LiveCD image.
+  * `root`: empty directory used to prepare the root filesystem.
+  * `cdroot`: empty directory used to prepare files on LiveCD.
+
+== Run the script
+ - Remember to set environment variables like `MAKEOBJDIRPREFIX` if you use
+   it during build of FreeBSD source code.
+ - Run the script you created in the previous part to start the build. It will
+   read the real build script `build.sh` and execute commands in it.
+ - The build process is split into several steps, so a failed step can be
+   restarted without re-run the complete build process. Choose "Run" to do
+   all steps or choose "Edit" to enter steps you want to run.
+
+== Possible future improvement
+ - An easy way to set the size of memory disk without interrupting the boot.
+ - Allow using prebuilt binaries to install base.
+ - Allow using `freebsd-update` to apply binary patches.
+ - Support memory stick. Use FAT32, UFS, or ext2 instead of ISO9660.
+ - Support GRUB2 to enable booting multiple operating systems on single medium.
+ - Support UEFI boot.
