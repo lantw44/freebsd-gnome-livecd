@@ -120,10 +120,16 @@ assert_dir_or_file () {
 		exit 1
 	fi
 }
-assert_empty () {
+assert_has_pkg () {
 	if [ -z "$2" ]; then
 		echo "Variable '$1' is empty."
 		echo "If no package have to be installed, set it to 'pkg'."
+		exit 1
+	fi
+}
+assert_not_empty () {
+	if [ -z "$2" ]; then
+		echo "Variable '$1' is empty."
 		exit 1
 	fi
 }
@@ -132,10 +138,11 @@ assert_dir_or_file root "${root}"
 assert_dir_or_file cdroot "${cdroot}"
 assert_dir_or_file image "${image}"
 assert_dir_or_file repo "${repo}"
-assert_empty pkgs "${pkgs}"
-assert_empty vol "${vol}"
+assert_has_pkg pkgs "${pkgs}"
+assert_not_empty vol "${vol}"
 unset assert_dir_or_file
-unset assert_empty
+unset assert_has_pkg
+unset assert_not_empty
 
 # Check whether the volume name is too long
 if [ "${#vol}" -gt "31" ]; then
