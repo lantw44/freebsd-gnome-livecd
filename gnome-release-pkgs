@@ -1,5 +1,5 @@
 ports-mgmt/pkg
-x11/gnome3
+x11/gnome
 deskutils/gnome-shell-extra-extensions
 x11-servers/xorg-server
 x11-drivers/xorg-drivers
