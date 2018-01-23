@@ -1,5 +1,7 @@
 #!/bin/sh
 
+srcdir="`dirname "$0"`"
+
 freebsd_version="11.1"
 gnome_version="3.26.2"
 gnome_underscore="3_26_2"
@@ -13,9 +15,9 @@ cdroot="`pwd`/cdroot-release"
 image="`pwd`/out/FreeBSD-${freebsd_version}-GNOME-${gnome_version}-${date}.iso"
 
 repo="/usr/local/poudriere/data/packages/freebsd11-ports-gnome-release"
-pkgs="`cat gnome3-release-pkgs`"
+pkgs="`cat "${srcdir}/gnome-release-pkgs"`"
 vol="FREEBSD_GNOME_${gnome_underscore}_RELEASE"
 
 # ===========================================================================
 
-. "`dirname "$0"`/build.sh"
+. "${srcdir}/build.sh"
