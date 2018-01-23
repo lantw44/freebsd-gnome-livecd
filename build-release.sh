@@ -14,7 +14,7 @@ image="`pwd`/out/FreeBSD-${freebsd_version}-GNOME-${gnome_version}-${date}.iso"
 
 repo="/usr/local/poudriere/data/packages/freebsd11-ports-gnome-release"
 pkgs="`cat gnome3-release-pkgs`"
-vol="FREEBSD_GNOME_${gnome_underscore}_DEBUG"
+vol="FREEBSD_GNOME_${gnome_underscore}_RELEASE"
 
 # ===========================================================================
 
