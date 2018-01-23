@@ -1,4 +1,4 @@
-steps="system packages user config uzip ramdisk boot image"
+steps="system packages user config ufs font uzip ramdisk boot image"
 pwdir="$(realpath $(dirname "$0"))"
 
 system () {
@@ -58,10 +58,22 @@ kern.coredump=0
 EOF
 }
 
-uzip () {
+ufs () {
 	install -o root -g wheel -m 755 -d "${cdroot}"
 	mkdir "${cdroot}/data"
 	makefs "${cdroot}/data/system.ufs" "${root}"
+}
+
+font () {
+	md_unit="$(mdconfig -a -t vnode -f "${cdroot}/data/system.ufs")"
+	mount "/dev/${md_unit}" "${root}"
+	rm -rf "${root}/var/db/fontconfig"
+	chroot "${root}" fc-cache -fsv
+	umount "${root}"
+	mdconfig -d -u "${md_unit}"
+}
+
+uzip () {
 	mkuzip -o "${cdroot}/data/system.uzip" "${cdroot}/data/system.ufs"
 	rm -f "${cdroot}/data/system.ufs"
 }

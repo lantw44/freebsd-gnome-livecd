@@ -3,3 +3,4 @@ x11/gnome
 deskutils/gnome-shell-extra-extensions
 x11-servers/xorg-server
 x11-drivers/xorg-drivers
+x11-fonts/noto
