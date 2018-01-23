@@ -12,7 +12,7 @@ root="`pwd`/root-debug"
 cdroot="`pwd`/cdroot-debug"
 image="`pwd`/out/FreeBSD-${freebsd_version}-GNOME-${gnome_version}-${date}-debug.iso"
 
-repo="/usr/local/poudriere/data/packages/freebsd11-ports-gnome-gnome3-debug"
+repo="/usr/local/poudriere/data/packages/freebsd11-ports-gnome-debug"
 pkgs="`cat gnome3-debug-pkgs`"
 vol="FREEBSD_GNOME_${gnome_underscore}_DEBUG"
 
