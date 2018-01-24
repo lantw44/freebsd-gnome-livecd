@@ -3,7 +3,7 @@
 
 This project provides a simple and easy-to-understand script that can be used
 to build a LiveCD for FreeBSD. The implementation is largely based on
-https://wiki.freebsd.org/AvgLiveCD[AvgLiveCD] article written by
+https://wiki.freebsd.org/AndriyGapon/AvgLiveCD[AvgLiveCD] article written by
 https://wiki.freebsd.org/AndriyGapon[Andriy Gapon].
 
 Unlike most other scripts to automate the process of building LiveCD, it
